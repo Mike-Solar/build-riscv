@@ -15,7 +15,7 @@ jobs:
         cd $GITHUB_WORKSPACE/riscv-gnu-toolchain
         mkdir $GITHUB_WORKSPACE/build
         ./configure --prefix=$GITHUB_WORKSPACE/build --enable-multilib
-        make
+        make -j4
         make install
     - name: pack
       shell: bash

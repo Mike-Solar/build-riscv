@@ -1,6 +1,6 @@
 on: push
 jobs:
-  build: 
+  linux: 
     runs-on: ubuntu-latest
     steps:
     - name: clone
@@ -23,9 +23,9 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/build
         mkdir DEBIAN
-        echo "Package: RISC-V Cross Compiler(Newlib)
-        Version: 20250522
-        Architecture: amd64
+        echo "Package:riscv-gnu-toolchain
+        Version:20250522
+        Architecture:amd64
         Maintainer: Mike Solar
         Description: GCC for RISC-V, use Newlib" > DEBIAN/control
         cd ..

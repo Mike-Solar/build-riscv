@@ -1,0 +1,39 @@
+on: push
+jobs:
+  build: 
+    runs-on: ubuntu-22.04
+    steps:
+    - name: clone
+      shell: bash
+      run: |
+        sudo apt update && sudo apt install git
+        cd $GITHUB_WORKSPACE
+        git clone https://github.com/riscv-collab/riscv-gnu-toolchain.git
+    - name: compile
+      shell: bash
+      run: |
+        cd $GITHUB_WORKSPACE/riscv-gnu-toolchain
+        mkdir $GITHUB_WORKSPACE/build
+        ./configure --prefix=$GITHUB_WORKSPACE/build --enable-multilib
+        make
+        make install
+    - name: pack
+      shell: bash
+      run: |
+        cd $GITHUB_WORKSPACE/build
+        mkdir DEBIAN
+        echo "Package: RISC-V Cross Compiler(Newlib)
+        Version: 20250522
+        Architecture: amd64
+        Maintainer: Mike Solar
+        Description: GCC for RISC-V, use Newlib" > DEBIAN/control
+        cd ..
+        dpkg -b build riscv-gcc.deb
+    - name: create github release
+      id: new_release
+      uses: softprops/action-gh-release@v2.0.8
+      with:
+          name: latest
+          make_latest: true
+          files: $GITHUB_WORKSPACE/riscv-gcc.deb
+

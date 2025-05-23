@@ -1,3 +1,4 @@
+name: Main
 on: push
 jobs:
   linux: 
@@ -37,4 +38,4 @@ jobs:
           name: latest
           make_latest: true
           files: $GITHUB_WORKSPACE/riscv-gcc.deb
-
+      if: github.ref_type == 'tag'

@@ -32,7 +32,7 @@ jobs:
         cd ..
         dpkg -b build riscv-gcc.deb
     - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact
         with:
           name: build-artifacts
           path: $GITHUB_WORKSPACE/riscv-gcc.deb

@@ -31,8 +31,12 @@ jobs:
         Description: GCC for RISC-V, use Newlib" > DEBIAN/control
         cd ..
         dpkg -b build riscv-gcc.deb
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        path: $GITHUB_WORKSPACE/riscv-gcc.deb
     - name: Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: $GITHUB_WORKSPACE/riscv-gcc.deb
-          tag_name: 20250522
+      uses: softprops/action-gh-release@v2
+      with:
+        files: $GITHUB_WORKSPACE/riscv-gcc.deb
+        tag_name: 20250522
